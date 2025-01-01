@@ -1,8 +1,9 @@
-import { ChatOpenAI } from "langchain/chat_models/openai"
-import { PromptTemplate } from "langchain/prompts"
-import { SupabaseVectorStore } from "langchain/vectorstores/supabase"
-import { OpenAIEmbeddings } from "langchain/embeddings/openai"
-import { createClient } from "@supabase/supabase-js"
+import { ChatOpenAI } from 'langchain/chat_models/openai'
+import { PromptTemplate } from 'langchain/prompts'
+import { SupabaseVectorStore } from 'langchain/vectorstores/supabase'
+import { OpenAIEmbeddings } from 'langchain/embeddings/openai'
+import { createClient } from '@supabase/supabase-js'
+import { StringOutputParser } from 'langchain/schema/output_parser'
 
 document.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -30,16 +31,13 @@ const standaloneQuestionTemplate = 'Given a question, convert it to a standalone
 
 const standaloneQuestionPrompt = PromptTemplate.fromTemplate(standaloneQuestionTemplate)
 
-const standaloneQuestionChain = standaloneQuestionPrompt.pipe(llm)
+const standaloneQuestionChain = standaloneQuestionPrompt.pipe(llm).pipe(new StringOutputParser())
 
 const response = await standaloneQuestionChain.invoke({
     question: 'What are the technical requirements for running Scrimba? I only have a very old laptop which is not that powerful.'
 })
 
-const response2 = await retriever.invoke('Will Scrimba work on an old laptop?')
-
 console.log(response)
-console.log(response2)
 
 async function progressConversation() {
     const userInput = document.getElementById('user-input')

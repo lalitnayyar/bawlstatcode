@@ -1,0 +1,27 @@
+[vite] connecting... client:742:8
+[vite] connected. client:861:14
+GET
+http://localhost:3000/favicon.ico
+[HTTP/1.1 404 Not Found 0ms]
+
+Array(4) [ {…}, {…}, {…}, {…} ]
+index.js:41:8
+[vite] connecting... client:742:8
+[vite] connected. client:861:14
+GET
+http://localhost:3000/favicon.ico
+[HTTP/1.1 404 Not Found 0ms]
+
+Array(4) [ {…}, {…}, {…}, {…} ]
+index.js:41:8
+{
+  "pageContent": "What are the technical requirements to use the platform (system requirements, internet speed, etc.)?\nScrimba is ultra lightweight so you will probably find you can use it on a low spec PC with mobile internet!",
+  "metadata": {
+    "loc": {
+      "lines": {
+        "to": 31,
+        "from": 30
+      }
+    }
+  }
+}

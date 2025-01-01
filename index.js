@@ -1,5 +1,8 @@
 import { ChatOpenAI } from "langchain/chat_models/openai"
 import { PromptTemplate } from "langchain/prompts"
+import { SupabaseVectorStore } from "langchain/vectorstores/supabase"
+import { OpenAIEmbeddings } from "langchain/embeddings/openai"
+import { createClient } from "@supabase/supabase-js"
 
 document.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -7,35 +10,36 @@ document.addEventListener('submit', (e) => {
 })
 
 const openAIApiKey = process.env.OPENAI_API_KEY
+
+const embeddings = new OpenAIEmbeddings({ openAIApiKey })
+const sbApiKey = process.env.SUPABASE_API_KEY
+const sbUrl = process.env.SUPABASE_URL_LC_CHATBOT
+const client = createClient(sbUrl, sbApiKey)
+
+const vectorStore = new SupabaseVectorStore(embeddings, {
+    client,
+    tableName: 'documents',
+    queryName: 'match_documents'
+})
+
+const retriever = vectorStore.asRetriever()
+
 const llm = new ChatOpenAI({ openAIApiKey })
 
-/**
- * Challenge:
- * 1. Create a prompt to turn a user's question into a 
- *    standalone question. (Hint: the AI understands 
- *    the concept of a standalone question. You don't 
- *    need to explain it, just ask for it.)
- * 2. Create a chain with the prompt and the model.
- * 3. Invoke the chain remembering to pass in a question.
- * 4. Log out the response.
- * **/
-
-// A string holding the phrasing of the prompt
 const standaloneQuestionTemplate = 'Given a question, convert it to a standalone question. question: {question} standalone question:'
 
-// A prompt created using PromptTemplate and the fromTemplate method
 const standaloneQuestionPrompt = PromptTemplate.fromTemplate(standaloneQuestionTemplate)
 
-// Take the standaloneQuestionPrompt and PIPE the model
 const standaloneQuestionChain = standaloneQuestionPrompt.pipe(llm)
 
-// Await the response when you INVOKE the chain. 
-// Remember to pass in a question.
 const response = await standaloneQuestionChain.invoke({
     question: 'What are the technical requirements for running Scrimba? I only have a very old laptop which is not that powerful.'
 })
 
-console.log(JSON.stringify(response, null, 2))
+const response2 = await retriever.invoke('Will Scrimba work on an old laptop?')
+
+console.log(response)
+console.log(response2)
 
 async function progressConversation() {
     const userInput = document.getElementById('user-input')

@@ -4,6 +4,7 @@ import { StringOutputParser } from 'langchain/schema/output_parser'
 import { retriever } from '/utils/retriever'
 import { combineDocuments } from '/utils/combineDocuments'
 import { RunnablePassthrough, RunnableSequence } from "langchain/schema/runnable"
+import { formatConvHistory } from '/utils/formatConvHistory.js'
 
 document.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -47,6 +48,8 @@ const chain = RunnableSequence.from([
     answerChain
 ])
 
+const convHistory = []
+
 async function progressConversation() {
     const userInput = document.getElementById('user-input')
     const chatbotConversation = document.getElementById('chatbot-conversation-container')
@@ -63,6 +66,8 @@ async function progressConversation() {
         question: question
     })
 
+    convHistory.push(question)
+    convHistory.push(response)
     // add AI message
     const newAiSpeechBubble = document.createElement('div')
     newAiSpeechBubble.classList.add('speech', 'speech-ai')

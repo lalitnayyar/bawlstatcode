@@ -1,0 +1,29 @@
+[vite] connecting... client:742:8
+[vite] connected. client:861:14
+GET
+http://localhost:3000/favicon.ico
+[HTTP/1.1 404 Not Found 0ms]
+
+What are the technical requirements to use the platform (system requirements, internet speed, etc.)?
+Scrimba is ultra lightweight so you will probably find you can use it on a low spec PC with mobile internet!
+
+What is the cost of the courses or subscription, and are there any discounts or scholarships available?
+We use purchasing power parity, so please check Scrimba.com for your local price. If you are struggling to pay, please email us at help@scrimba.com and we will do our best to help.
+
+Can I access the platform and its resources offline?
+At the moment, we are an online only platform.
+
+I have a question which isn’t covered here.
+Just drop us a message on our Discord server (https://scrimba.com/discord) or email us at help@scrimba.com. We’d be happy to help.
+
+General Scrimba Info:
+
+Plans and Pricing:
+We use purchasing power parity, so please check Scrimba.com for your local price.
+
+Buy with confidence
+Money Back Guarantee:Full 30-day guarantee, no questions asked.
+
+Keep Discount For Life: Your discount stays for as long as you subscribe.
+
+We frequently invite Scrimba teachers, code reviewers, and professional developers to chat with the group and answer questions. You'll also share wins, challenges, or anything you need support with. Each session is usually 1hr long, and you'll choose the session that best fits your schedule. Or feel free to attend all three. index.js:36:8

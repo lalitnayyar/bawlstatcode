@@ -22,20 +22,30 @@ question: {question}
 answer: `
 const answerPrompt = PromptTemplate.fromTemplate(answerTemplate)
 
-/**
- * Super Challenge:
- * 
- * Set up a RunnableSequence so that the standaloneQuestionPrompt 
- * passes the standalone question to the retriever, and the retriever
- * passes the combined docs as context to the answerPrompt. Remember, 
- * the answerPrompt should also have access to the original question. 
- * 
- * When you have finished the challenge, you should see a 
- * conversational answer to our question in the console.
- * 
-**/
+const standaloneQuestionChain = standaloneQuestionPrompt
+    .pipe(llm)
+    .pipe(new StringOutputParser())
+    
+const retrieverChain = RunnableSequence.from([
+    prevResult => prevResult.standalone_question,
+    retriever,
+    combineDocuments
+])
+const answerChain = answerPrompt
+    .pipe(llm)
+    .pipe(new StringOutputParser())
 
-const chain = standaloneQuestionPrompt.pipe(llm).pipe(new StringOutputParser()).pipe(retriever).pipe(combineDocuments).pipe(answerPrompt)
+const chain = RunnableSequence.from([
+    {
+        standalone_question: standaloneQuestionChain,
+        original_input: new RunnablePassthrough()
+    },
+    {
+        context: retrieverChain,
+        question: ({ original_input }) => original_input.question
+    },
+    answerChain
+])
 
 const response = await chain.invoke({
     question: 'What are the technical requirements for running Scrimba? I only have a very old laptop which is not that powerful.'

@@ -1,0 +1,3 @@
+[vite] connecting... client:742:8
+[vite] connected. client:861:14
+Scrimba is ultra lightweight so you will probably find you can use it on a low spec PC with mobile internet! index.js:54:8

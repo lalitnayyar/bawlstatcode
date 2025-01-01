@@ -11,6 +11,21 @@ document.addEventListener('submit', (e) => {
     progressConversation()
 }) 
 
+/**
+ * Super Challenge:
+ * 
+ * 1. Pass convHistory into the chain as conv_history at 
+ *    the point where we invoke it. Remember to make use 
+ *    of our formatConvHistory function!
+ * 2. Update the standaloneQuestionTemplate to make use 
+ *    of convHistory. 
+ * 3. Make sure the answerChain has access to convHistory 
+ *    and edit answerTemplate to make use of it.
+ * 4. Test by giving the chatbot some information and 
+ *    checking in the next question to see if it remembers it.
+ * 
+ * */ 
+
 const openAIApiKey = process.env.OPENAI_API_KEY
 const llm = new ChatOpenAI({ openAIApiKey })
 

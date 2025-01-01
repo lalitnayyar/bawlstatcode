@@ -8,9 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "langchain": "0.0.152",
     "@supabase/supabase-js": "2.36.0",
+    "dotenv": "^16.4.7",
+    "langchain": "0.0.152",
     "vite": "latest"
-  },
-  "devDependencies": {}
+  }
 }

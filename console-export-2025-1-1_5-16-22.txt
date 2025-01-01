@@ -1,0 +1,8 @@
+[vite] connecting... client:742:8
+[vite] connected. client:861:14
+GET
+http://localhost:3000/favicon.ico
+[HTTP/1.1 404 Not Found 0ms]
+
+Object { lc_serializable: true, lc_kwargs: {…}, lc_namespace: (2) […], content: "What are the minimum technical requirements for running Scrimba?", name: undefined, additional_kwargs: {…} }
+index.js:38:8

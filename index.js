@@ -4,12 +4,12 @@ import { StringOutputParser } from 'langchain/schema/output_parser'
 import { retriever } from '/utils/retriever'
 import { combineDocuments } from '/utils/combineDocuments'
 import { RunnablePassthrough, RunnableSequence } from "langchain/schema/runnable"
-import { formatConvHistory } from '/utils/formatConvHistory.js'
+import { formatConvHistory } from '/utils/formatConvHistory'
 
 document.addEventListener('submit', (e) => {
     e.preventDefault()
     progressConversation()
-}) 
+})
 
 /**
  * Super Challenge:
@@ -33,21 +33,19 @@ const standaloneQuestionTemplate = `Given some conversation history (if any) and
 conversation history: {conv_history}
 question: {question} 
 standalone question:`
-
 const standaloneQuestionPrompt = PromptTemplate.fromTemplate(standaloneQuestionTemplate)
 
-const answerTemplate = `You are a helpful and enthusiastic support bot who can answer a given question about Scrimba based on the context provided and the conversation history. Try to find the answer in the context. If the answer is not given in the context, find the answer in the conversation history if possible. If you really don't know the answer, say "I'm sorry, I don't know the answer to that." And direct the questioner to email mail@lalitnayyar.com. Don't try to make up an answer. Always speak as if you were chatting to a friend.
+const answerTemplate = `You are a helpful and enthusiastic support bot who can answer a given question about Scrimba based on the context provided and the conversation history. Try to find the answer in the context. If the answer is not given in the context, find the answer in the conversation history if possible. If you really don't know the answer, say "I'm sorry, I don't know the answer to that." And direct the questioner to email help@scrimba.com. Don't try to make up an answer. Always speak as if you were chatting to a friend.
 context: {context}
 conversation history: {conv_history}
 question: {question}
 answer: `
-
 const answerPrompt = PromptTemplate.fromTemplate(answerTemplate)
 
 const standaloneQuestionChain = standaloneQuestionPrompt
     .pipe(llm)
     .pipe(new StringOutputParser())
-    
+
 const retrieverChain = RunnableSequence.from([
     prevResult => prevResult.standalone_question,
     retriever,
@@ -88,9 +86,9 @@ async function progressConversation() {
         question: question,
         conv_history: formatConvHistory(convHistory)
     })
-
     convHistory.push(question)
     convHistory.push(response)
+
     // add AI message
     const newAiSpeechBubble = document.createElement('div')
     newAiSpeechBubble.classList.add('speech', 'speech-ai')

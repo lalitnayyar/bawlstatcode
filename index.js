@@ -31,9 +31,9 @@ const standaloneQuestionTemplate = 'Given a question, convert it to a standalone
 
 const standaloneQuestionPrompt = PromptTemplate.fromTemplate(standaloneQuestionTemplate)
 
-const standaloneQuestionChain = standaloneQuestionPrompt.pipe(llm).pipe(new StringOutputParser())
+const chain = standaloneQuestionPrompt.pipe(llm).pipe(new StringOutputParser()).pipe(retriever)
 
-const response = await standaloneQuestionChain.invoke({
+const response = await chain.invoke({
     question: 'What are the technical requirements for running Scrimba? I only have a very old laptop which is not that powerful.'
 })
 
